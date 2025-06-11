@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: clangd
+# key: clangd
+# expand-env: ((yas-indent-line 'fixed))
+# --
+CompileFlags:
+  Add:
+    - -isystem/usr/include/c++/13
+    - -isystem/usr/include/x86_64-linux-gnu/c++/13
+    - -std=c++17
+    - -I/./cpp_comm/include/
