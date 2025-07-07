@@ -16,7 +16,8 @@
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         ;; "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el
+	 "https://radian-software.github.io/straight.el/install.el"
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
@@ -25,6 +26,8 @@
 
 ;; <25/05/03> had to clone nongnu manually, straight clone just won't work
 ;; git clone --origin origin --no-checkout https\://git.savannah.gnu.org/git/emacs/nongnu.git /home/pete/.emacs-profs/foo/straight/repos/nongnu-elpa/ --single-branch
+
+;; <25/06/16> comment out bootstrap.el:134 nongnu manually.
 
 (when (string-equal (daemonp) "gh")
   ;; daemon started by systemd, with minimal environment
@@ -37,16 +40,6 @@
 (setq ghost/lsp-client "lsp")
 (load "ghost-prog")
 (load "ghost-note")
-
-;; Projectile, Magit
-;; (load "mech-project")
-
-;; Org, Org-roam
-;; (load "mech-org")
-;; (load "mech-roam")
-
-;; Utilities
-;; (load "mech-util")
 
 ;; init.el ends here.
 

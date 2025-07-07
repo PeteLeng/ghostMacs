@@ -35,6 +35,13 @@
     (insert (format "%s\n\n" (car args))))
   (apply orig args))
 
+(defun ghost/list-fonts ()
+  (with-current-buffer "*scratch*"
+    ;; (goto-char (point-max))
+    (dolist (f (font-family-list))
+      (insert (format "%s\n" f))
+      )))
+
 ;; (ghost/advice-once! lsp-register-client ghost/inspect :around)
 ;; (message "%s" (symbol-plist 'lsp-register-client))
 

@@ -63,10 +63,13 @@
 
   ;; UTF-8
   ;; https://www.masteringemacs.org/article/working-coding-systems-unicode-emacs
-  (set-default-coding-systems 'utf-8)
+  (set-default-coding-systems 'utf-8-unix)
+  (set-keyboard-coding-system 'utf-8)
     
   ;; Frame
   (add-to-list 'default-frame-alist '(alpha-background . 90))
+  (when (equal system-type 'windows-nt)
+    (add-to-list 'default-frame-alist '(font . "Consolas-14")))
   ;; External display
   ;; (cond
   ;;  ((string-equal (getenv "EXT_DISPLAY") "t")

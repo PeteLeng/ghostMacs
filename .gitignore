@@ -1,0 +1,13 @@
+*~*
+*#*
+**/straight/
+**/transient/
+**/workspace/
+**/org-persist/
+tramp
+*.db
+.dap*
+.lsp-session
+.org-id-locations
+bookmarks
+history

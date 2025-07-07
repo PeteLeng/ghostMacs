@@ -36,7 +36,7 @@
   ;; (setq company-dabbrev-other-buffers t)
   ;; (setq company-dabbrev-ignore-buffers ".*\\.pdf")
   
-  ;; (setq company-global-modes '(not shell-mode eshell-mode))
+  (setq company-global-modes '(not shell-mode eshell-mode))
   ;; (delete 'company-clang company-backends)
   
   (global-company-mode))

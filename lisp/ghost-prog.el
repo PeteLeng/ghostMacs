@@ -19,11 +19,18 @@
 
 (defvar ghost/remap-major-mode-langs
   '("c" "c++" "python" "rust" "java" "bash" "yaml" "toml" "json" "css"))
-(dolist (lang ghost/remap-major-mode-langs)
-  (add-to-list 'major-mode-remap-alist
-	       (cons (intern (concat lang "-mode"))
-		     (intern (concat lang "-ts-mode")))))
 
+(if (treesit-language-available-p 'python)
+    (dolist (lang ghost/remap-major-mode-langs)
+      (add-to-list 'major-mode-remap-alist
+		   (cons (intern (concat lang "-mode"))
+			 (intern (concat lang "-ts-mode")))))
+  (message "treesit not supported yet"))
+
+;; ------------
+;; weird flymake error in wins emacs
+;; ------------
+(setq flymake-log-level 'debug)
 
 ;; ------------
 ;; Git
@@ -55,7 +62,6 @@
 ;; ------------
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
 
-
 ;; ------------
 ;; Language Server
 ;; ------------
@@ -72,45 +78,52 @@
    ;; ported from
    ;; https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/
    lsp-auto-configure t
-   lsp-eldoc-enable-hover nil
-   lsp-enable-dap-auto-configure nil
-   lsp-enable-file-watchers nil
-   lsp-enable-folding nil
+   ;; lsp-eldoc-enable-hover nil
+   ;; lsp-enable-dap-auto-configure nil
+   ;; lsp-enable-file-watchers nil
+   ;; lsp-enable-folding nil
    lsp-enable-imenu t
-   lsp-enable-indentation nil
-   lsp-enable-links nil
-   lsp-enable-on-type-formatting nil
-   lsp-enable-suggest-server-download nil
-   lsp-enable-symbol-highlighting nil
-   lsp-enable-text-document-color nil
+   ;; lsp-enable-indentation nil
+   ;; lsp-enable-links nil
+   ;; lsp-enable-on-type-formatting nil
+   ;; lsp-enable-suggest-server-download nil
+   ;; lsp-enable-symbol-highlighting nil
+   ;; lsp-enable-text-document-color nil
    lsp-enable-xref t
    lsp-signature-doc-lines 5
 
    lsp-headerline-breadcrumb-enable t
-   lsp-headerline-breadcrumb-enable-diagnostics nil
-   lsp-headerline-breadcrumb-enable-symbol-numbers nil
-   lsp-headerline-breadcrumb-icons-enable nil
+   ;; lsp-headerline-breadcrumb-enable-diagnostics nil
+   ;; lsp-headerline-breadcrumb-enable-symbol-numbers nil
+   ;; lsp-headerline-breadcrumb-icons-enable nil
 
    lsp-modeline-code-actions-enable t
    lsp-modeline-diagnostics-enable t
-   lsp-modeline-workspace-status-enable nil
+   ;; lsp-modeline-workspace-status-enable nil
 
    ;; other
    ;; lsp-use-workspace-root-for-server-default-directory t
    )
 
   (defvar ghost/lsp-autostart-langs
-    '("c" "c++" "python" "rust" "java" "sh"))
+    '(
+      ;; "c"
+      ;; "c++"
+      "python"
+      ;; "rust"
+      ;; "java"
+      ;; "sh"
+      ))
+  
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil nil))
-  ;; incorporate ts modes
+  ;; incorporate ts mode hooks
   (dolist (lang ghost/lsp-autostart-langs)
     (add-hook (intern (string-join `(,lang "-ts-mode-hook"))) #'lsp-deferred))
 
 
   ;; Sub-modules
   ;; ------------
-  
   (defvar ghost/lang-client-alist
     '((python . lsp-pyright)
       (java . lsp-java)))
@@ -144,7 +157,6 @@
 	 (add-hook hook func)))
       (_ (error "malformed lang client pair: %s" ele))))
 
-
   
   ;; Python
   (straight-use-package 'lsp-pyright)
@@ -156,7 +168,12 @@
   ;; Java
   ;; https://emacs-lsp.github.io/lsp-java/
   (straight-use-package 'lsp-java)
-  (setq lsp-java-server-install-dir "/home/pete/opt/java-lsp/")
+  (pcase system-type
+    ('gnu/linux (progn (message "home")
+		       (setq lsp-java-server-install-dir "/home/pete/opt/java-lsp/")))
+    ('windows-nt (progn (message "MS let's dance lol.")
+			(setq lsp-java-server-install-dir "d:/yleng/dev/jdt-lsp/"))))
+
   ;; (setq lsp-java-format-settings-url "https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings")
   ;; (add-hook 'java-mode-hook #'(lambda ()
   ;; 				(require 'lsp-java)))

@@ -2,7 +2,7 @@
 ;; ------------
 ;; Blog
 ;; ------------
-(straight-use-package 'ox-hugo)
+;; (straight-use-package 'ox-hugo)
 
 
 ;; ------------
@@ -126,8 +126,12 @@ the preceding heading takes precedence."
   (add-to-list 'org-latex-packages-alist '("" "color"))
 
   ;; Org mode keybindings
-  (keymap-set org-mode-map "C-M-s-h" 'ghost/org-goto-heading-bf)
-
+  (pcase system-type
+    ('gnu/linux
+     (keymap-set org-mode-map "C-M-s-h" 'ghost/org-goto-heading-bf))
+    ('windows-nt
+     (keymap-set org-mode-map "M-g h" 'ghost/org-goto-heading-bf)))
+  
   )
 
 
@@ -136,8 +140,8 @@ the preceding heading takes precedence."
 ;; ------------
 
 (straight-use-package 'org-roam)
-(defvar ghost/roam-dir (file-truename "~/org/vault/"))
-(defvar ghost/roam-tmpl-dir (file-truename "~/org/tmpls/"))
+(defvar ghost/roam-dir (file-truename "d:/yleng/org/hw/"))
+(defvar ghost/roam-tmpl-dir (file-truename "d:/yleng/org/tmpls/"))
 (setq org-roam-directory ghost/roam-dir)
 
 ;; Global Roam Keybindings

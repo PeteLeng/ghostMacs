@@ -29,11 +29,17 @@
 ;; ------------
 ;; https://github.com/magnars/multiple-cursors.el
 (straight-use-package 'multiple-cursors)
-(keymap-global-set "C-M-s-," 'mc/mark-previous-like-this)
-(keymap-global-set "C-M-s-." 'mc/mark-next-like-this)
-(keymap-global-set "C-M-s-/" 'mc/mark-all-like-this)
-(keymap-global-set "C-M-s-c c" 'mc/edit-lines)
-(keymap-global-set "M-<mouse-8>" 'mc/add-cursor-on-click) ;; got extra thumb buttons
+(pcase system-type
+  ('windows-nt (progn
+		 (keymap-global-set "M-g ," 'mc/mark-previous-like-this)
+		 (keymap-global-set "M-g ." 'mc/mark-next-like-this)))
+  ('gnu/linux (progn
+		(keymap-global-set "C-M-s-," 'mc/mark-previous-like-this)
+		(keymap-global-set "C-M-s-." 'mc/mark-next-like-this)
+		(keymap-global-set "C-M-s-/" 'mc/mark-all-like-this)
+		(keymap-global-set "C-M-s-c c" 'mc/edit-lines)
+		;; my mouse has extra thumb buttons, hehe
+		(keymap-global-set "M-<mouse-8>" 'mc/add-cursor-on-click))))
 
 ;; ------------
 ;; Templates
@@ -48,8 +54,15 @@
 ;; ------------
 ;; Navigation
 ;; ------------
-(keymap-global-set "C-M-s-l" 'avy-goto-line)
-(keymap-global-set "C-M-s-w" 'avy-goto-word-1)
+(pcase system-type
+  ('gnu/linux (progn (message "Home")
+		     (keymap-global-set "C-M-s-l" 'avy-goto-line)
+		     (keymap-global-set "C-M-s-w" 'avy-goto-word-1)))
+  ('windows-nt (progn (message "lets dance lol")
+		      (keymap-global-set "M-g l" 'avy-goto-line)
+		      (keymap-global-set "M-g w" 'avy-goto-word-1))))
+
+
 ;; (keymap-global-set "M-g oh" 'avy-org-goto-heading-timer)
 
 ;; ------------
