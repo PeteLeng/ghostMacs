@@ -106,6 +106,13 @@
   (setq ring-bell-function 'ignore) 	;; ignore bells
   ;; (setq visible-bell t)
 
+  ;; ---------
+  ;; Indentation
+  ;; ---------
+  ;; java indentation issue
+  ;; see: https://emacs.stackexchange.com/questions/9869/make-emacs-format-java-more-consistently
+  (setq-default indent-tabs-mode nil)
+
   ;; WSL
   ;; ------------
   ;; https://hungyi.net/posts/browse-emacs-urls-wsl/

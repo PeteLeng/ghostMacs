@@ -172,7 +172,10 @@
     ('gnu/linux (progn (message "home")
 		       (setq lsp-java-server-install-dir "/home/pete/opt/java-lsp/")))
     ('windows-nt (progn (message "MS let's dance lol.")
-			(setq lsp-java-server-install-dir "d:/yleng/dev/jdt-lsp/"))))
+			(setq lsp-java-server-install-dir "d:/dev/Java/jdtls/"))))
+  ;; code style: https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
+  (setq lsp-java-format-settings-url
+	"file:///d:/dev/Java/eclipse-java-google-style.xml")
 
   ;; (setq lsp-java-format-settings-url "https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings")
   ;; (add-hook 'java-mode-hook #'(lambda ()

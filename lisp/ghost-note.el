@@ -141,7 +141,7 @@ the preceding heading takes precedence."
 
 (straight-use-package 'org-roam)
 (defvar ghost/roam-dir (file-truename "d:/yleng/org/hw/"))
-(defvar ghost/roam-tmpl-dir (file-truename "d:/yleng/org/tmpls/"))
+(defvar ghost/roam-tmpl-dir (file-truename "d:/yleng/org/tmpl/"))
 (setq org-roam-directory ghost/roam-dir)
 
 ;; Global Roam Keybindings
