@@ -167,7 +167,31 @@
 
   ;; Java
   ;; https://emacs-lsp.github.io/lsp-java/
+  (setq-default java-ts-mode-indent-offset 4)
   (straight-use-package 'lsp-java)
+  (with-eval-after-load 'lsp-java
+    (defun ghost/lsp-java-cache-filename-hash-suffix (filename)
+      (if (and (eq system-type 'windows-nt)
+               (string-match "\\`\\(.+?\\)\\.java\\(.+\\)\\'" filename))
+          (format "%s__%s.java"
+                  (match-string 1 filename)
+                  (substring (secure-hash 'sha1 (match-string 2 filename)) 0 12))
+        filename))
+
+    (unless (advice-member-p #'ghost/lsp-java-cache-filename-hash-suffix
+                             'lsp-java--get-filename)
+      (advice-add 'lsp-java--get-filename
+                  :filter-return #'ghost/lsp-java-cache-filename-hash-suffix))
+
+    (defun ghost/lsp-java-cache-buffer-p ()
+      (and buffer-file-name
+           (file-in-directory-p buffer-file-name lsp-java-workspace-cache-dir)))
+
+    (defun ghost/lsp-java-start-in-cache-buffer ()
+      (when (ghost/lsp-java-cache-buffer-p)
+        (lsp-deferred)))
+
+    (add-hook 'java-mode-hook #'ghost/lsp-java-start-in-cache-buffer))
   (pcase system-type
     ('gnu/linux (progn (message "home")
 		       (setq lsp-java-server-install-dir "/home/pete/opt/java-lsp/")))
