@@ -46,6 +46,19 @@
 ;; ------------
 (straight-use-package 'yasnippet)
 (require 'yasnippet)
+
+(defun ghost/yas-expand-snippet-normalize-eol (orig snippet &rest args)
+  (apply orig
+         (if (stringp snippet)
+             (replace-regexp-in-string "\r\n?" "\n" snippet)
+           snippet)
+         args))
+
+(unless (advice-member-p #'ghost/yas-expand-snippet-normalize-eol
+                         'yas-expand-snippet)
+  (advice-add 'yas-expand-snippet
+              :around #'ghost/yas-expand-snippet-normalize-eol))
+
 (yas-global-mode)
 
 (straight-use-package 'yasnippet-snippets)
