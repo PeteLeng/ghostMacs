@@ -63,7 +63,9 @@
 
   ;; UTF-8
   ;; https://www.masteringemacs.org/article/working-coding-systems-unicode-emacs
-  (set-default-coding-systems 'utf-8-unix)
+  (set-language-environment "UTF-8")
+  (prefer-coding-system 'utf-8)
+  (setq-default buffer-file-coding-system 'utf-8-unix)
   (set-keyboard-coding-system 'utf-8)
     
   ;; Frame
