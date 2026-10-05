@@ -1,13 +1,17 @@
-*~*
-*#*
-**/straight/
-**/transient/
-**/workspace/
-**/org-persist/
-tramp
-*.db
-.dap*
-.lsp-session
-.org-id-locations
-bookmarks
-history
+# Backup, auto-save, and lock files.
+*~
+\#*\#
+.\#*
+
+# Compiled Lisp.
+*.elc
+*.eln
+
+# Package checkouts/builds are local; straight version lockfiles remain trackable.
+/straight/*
+!/straight/versions/
+
+# Local runtime state.
+/local/
+/org-persist/
+/.org-id-locations
