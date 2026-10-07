@@ -36,7 +36,7 @@ Set before the paths below are initialized."
 (setopt inhibit-startup-screen t
         ring-bell-function #'ignore) ; Silence the bell.
 
-(load-theme 'misterioso t)
+(load-theme 'wombat t)
 
 ;; ============================================================================
 ;;; Editing
