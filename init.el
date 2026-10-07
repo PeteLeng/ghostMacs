@@ -88,16 +88,16 @@ DIRECTION is left, right, up, or down.  Respect window size limits."
                                  horizontal)))
 
 ;; Each arrow grows toward its neighbor; a prefix sets the resize amount.
-(keymap-global-set "M-S-<left>"
+(keymap-global-set "C-M-<left>"
                    (lambda (amount) (interactive "p")
                      (lean/grow-window 'left amount)))
-(keymap-global-set "M-S-<right>"
+(keymap-global-set "C-M-<right>"
                    (lambda (amount) (interactive "p")
                      (lean/grow-window 'right amount)))
-(keymap-global-set "M-S-<up>"
+(keymap-global-set "C-M-<up>"
                    (lambda (amount) (interactive "p")
                      (lean/grow-window 'up amount)))
-(keymap-global-set "M-S-<down>"
+(keymap-global-set "C-M-<down>"
                    (lambda (amount) (interactive "p")
                      (lean/grow-window 'down amount)))
 
