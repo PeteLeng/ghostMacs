@@ -132,10 +132,13 @@ DIRECTION is left, right, up, or down.  Respect window size limits."
 (setopt max-mini-window-height 8
         resize-mini-windows 'grow-only)
 
-;; M-j accepts literal input; RET accepts the selected candidate.
+;; M-j returns prompt text as-is; <RET> accepts the selected completion candidate.
 (fido-vertical-mode 1)
 ;; The graphical Tab key inserts the candidate without leaving the prompt.
 (keymap-set icomplete-fido-mode-map "<tab>" #'icomplete-force-complete)
+
+;; Stock *Completions* fallback, bypassed after <tab> override; keep anyway
+(setopt completion-auto-help nil)
 
 ;; ============================================================================
 ;;; Straight
@@ -177,6 +180,22 @@ KEY and VALUE are strings.  Preserve other runtime entries and return VALUE."
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+;; ============================================================================
+;;; In-buffer completion
+;; ============================================================================
+
+(straight-use-package 'company)
+(require 'company)
+(setq company-minimum-prefix-length 1
+      company-idle-delay 0.1
+      company-tooltip-limit 10
+      company-tooltip-align-annotations t
+      company-require-match nil ; Allow typing outside the candidate list.
+      company-dabbrev-ignore-case 'keep-prefix
+      company-dabbrev-downcase nil)
+;; company-global-modes controls eligible major modes; its default t means all.
+(global-company-mode 1)
 
 ;; ============================================================================
 ;;; Org
