@@ -212,6 +212,8 @@ KEY and VALUE are strings.  Preserve other runtime entries and return VALUE."
           org-pretty-entities t
           org-use-speed-commands t)) ; Single-key commands at heading starts.
 
+(add-hook 'org-mode-hook #'org-indent-mode)
+
 ;; Hidden markup becomes visible while editing it.
 (straight-use-package 'org-appear)
 (with-eval-after-load 'org-appear
